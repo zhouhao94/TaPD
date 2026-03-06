@@ -15,7 +15,7 @@ def preprocess(args):
     data_root = Path(args.data_root)
 
     for mode in ["test"]:
-        save_dir = Path("data/DeMo_processed") / mode
+        save_dir = Path("data/TaPD_processed") / mode
         extractor = Av2Extractor(save_path=save_dir, mode=mode)
 
         save_dir.mkdir(exist_ok=True, parents=True)
