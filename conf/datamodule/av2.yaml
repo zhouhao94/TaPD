@@ -1,0 +1,20 @@
+name: av2
+phase: default
+
+target:
+  _target_: src.datamodule.av2_datamodule.Av2DataModule
+
+  data_root: "data/DeMo_processed"
+
+  train_batch_size: ${batch_size}
+  val_batch_size: ${batch_size}
+  test_batch_size: ${batch_size}
+  shuffle: True
+  num_workers: ${num_workers}
+  pin_memory: True
+
+  dataset:
+    candidate_times: [0, 10, 20, 30, 40, 50]
+    val_squence_start: 10 # 历史轨迹从当前到50
+    radius: 150.0
+    train_mode: "only_focal"

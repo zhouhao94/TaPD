@@ -1,0 +1,44 @@
+defaults:
+  - datamodule: av2 # av2 for argoverse2, av1 for argoverse1
+  - model: model_forecast
+
+hydra:
+  run:
+    dir: outputs/${output}/${now:%Y%m%d-%H%M%S}
+
+seed: 2024
+monitor: val_minFDE6
+save_top_k: 5
+isFinetune: false
+
+data_root:
+checkpoint:
+pretrained_weights:
+backtrack_weights:
+freeze_backtrack: true
+output: change_${datamodule.name}_${datamodule.phase}_${model.name}_${model.phase}
+future_steps: 60 # 60 for argoverse2, 30 for argoverse1
+# trainer
+num_workers: 8
+gpus: 1 # when test, only use 1 gpu; when train/val, use 8 gpus
+sync_bn: true
+batch_size: 16
+epochs: 60
+warmup_epochs: 10
+
+# optimizer
+lr: 0.003
+weight_decay: 1e-4
+gradient_clip_val: 1.0
+gradient_clip_algorithm: norm
+
+align_weight_start: 0.05
+align_weight_end: 0.5
+align_weight_warmup_epochs: 10
+
+limit_train_batches:
+limit_val_batches:
+
+limit_test_batches:
+log_model: all
+test: false # false for val, true for test
