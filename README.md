@@ -95,7 +95,7 @@ python preprocess_av2.py --data_root=/path/to/data_root -p
 
 | Checkpoint | OAF | TBM | TaPD |
 | :-: | :-: | :-: | :-: |
-| -- | [checkpoint](https://drive.google.com/file/d/1MADALJFCTv4wVCbNqvRjKcprnGcuFjsm/view?usp=drive_link) | [checkpoint](https://drive.google.com/file/d/1s69_Y77G34chf7D8kmh6pn7ltLuD9-L9/view?usp=drive_link) | [checkpoint](https://drive.google.com/file/d/1g7dBDPnng0O-6ZLC57IFVrRkgdI4xfas/view?usp=drive_link) |
+| -- | [OAF.ckpt](https://drive.google.com/file/d/1MADALJFCTv4wVCbNqvRjKcprnGcuFjsm/view?usp=drive_link) | [TBM.ckpt](https://drive.google.com/file/d/1s69_Y77G34chf7D8kmh6pn7ltLuD9-L9/view?usp=drive_link) | [TaPD.ckpt](https://drive.google.com/file/d/1g7dBDPnng0O-6ZLC57IFVrRkgdI4xfas/view?usp=drive_link) |
 
 ## ❤️ Acknowledgements
  - [VideoMamba](https://github.com/OpenGVLab/VideoMamba)
