@@ -9,7 +9,7 @@ conda create -n TaPD python=3.10
 conda activate TaPD
 ```
 
-### Install dependency packpages
+### Install dependency packages
 ```
 pip install torch==2.1.1 torchvision==0.16.1 torchaudio==2.1.1 --index-url https://download.pytorch.org/whl/cu118
 pip install -r ./requirements.txt
@@ -65,3 +65,40 @@ python preprocess_av2.py --data_root=/path/to/data_root -p
 ```
 
 ## 🔥 Training and testing
+
+### Stage 1: Pre-train OAF
+- **Step 1:** In `conf/config.yaml`, set `isFinetune` to `false` (line 12).
+- **Step 2:** In `conf/model/model_forecast.yaml`, set `target._target_` to `src.model.trainer_forecast_av2_OAF.Trainer` (line 5).
+- **Step 3:** In `src/datamodule/av2_datamodule.py`, set line 5 to: `from .av2_dataset import Av2Dataset, collate_fn`.
+- **Step 4:** In `src/metrics/min_fde.py`, set lines 32 and 47 to: `fde=torch.norm(pred[...,-1,:2]-target.unsqueeze(1)[...,-1,:2],p=2,dim=-1)`.
+- **Step 5:** Training OAF with `python train.py` and validation OAF with 'python eval.py'.
+- **Step 6:** After validation, save the checkpoint with the best validation result to `OAF.ckpt`.
+
+### Stage 2: Train TBM Independently
+- **Step 1:** In `conf/model/model_forecast.yaml`, set `target._target_` to `src.model.trainer_forecast_av2_TBM.Trainer` (line 5).
+- **Step 2:** In `src/datamodule/av2_datamodule.py`, set line 5 to: `from .av2_dataset_TBM import Av2Dataset, collate_fn`.
+- **Step 3:** In `src/metrics/min_fde.py`, set lines 32 and 47 to: `fde=torch.norm(pred[...,0,:2]-target.unsqueeze(1)[...,0,:2],p=2,dim=-1)`.
+- **Step 4:** Training TBM with `python train.py` and validation TBM with 'python eval.py'.
+- **Step 5:** After validation, save the checkpoint with the best result to `TBM.ckpt`.
+
+### Stage 3: Freeze TBM and Fine-tune OAF
+- **Step 1:** In `conf/config.yaml`, set `isFinetune` to `false` (line 12), `pretrained_weights` to `OAF.ckpt` (line 16), and `backtrack_weights` to `TBM.ckpt` (line 17).
+- **Step 2:** Reproduce Steps 2, 3, and 4 in Stage 1.
+- **Step 3:** Finetune OAF with `python train.py`, and validation OAF with 'python eval.py'.
+- **Step 4:** After validation, save the checkpoint with the best result to 'TaPD.ckpt'.
+- **Step 5:** Test finetuned model for leaderboard submission with `python eval.py gpus=1 test=true`.
+
+## ⭐ Results and checkpoints
+| Models | 10Ts | 20Ts | 20Ts | 40Ts | 50Ts |
+| :- | :-: | :-: | :-: | :-: | :-: |
+| TaPD |  0.617/1.203  |  0.603/1.167  |  0.599/1.157  |  0.599/1.155  | 0.599/1.153 |
+
+| Checkpoint | OAF | TBM | TaPD |
+| :-: | :-: | :-: | :-: |
+| -- | [checkpoint](https://drive.google.com/file/d/1MADALJFCTv4wVCbNqvRjKcprnGcuFjsm/view?usp=drive_link) | [checkpoint](https://drive.google.com/file/d/1s69_Y77G34chf7D8kmh6pn7ltLuD9-L9/view?usp=drive_link) | [checkpoint](https://drive.google.com/file/d/1g7dBDPnng0O-6ZLC57IFVrRkgdI4xfas/view?usp=drive_link) |
+
+## ❤️ Acknowledgements
+ - [VideoMamba](https://github.com/OpenGVLab/VideoMamba)
+ - [Forecast-MAE](https://github.com/jchengai/forecast-mae)
+ - [StreamPETR](https://github.com/exiawsh/StreamPETR)
+ - [DeMo](https://github.com/fudan-zvg/DeMo)
