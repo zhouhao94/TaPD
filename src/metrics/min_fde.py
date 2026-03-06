@@ -44,9 +44,9 @@ class brier_minFDE(minFDE):
     def update(self, outputs: Dict[str, torch.Tensor], target: torch.Tensor, normalized_probability=False) -> None:
         with torch.no_grad():
             pred, prob = sort_predictions(outputs["y_hat"], outputs["pi"], k=self.k)
-            fde = torch.norm(
-                pred[..., -1, :2] - target.unsqueeze(1)[..., -1, :2], p=2, dim=-1
-            )
+            fde = torch.norm(pred[...,-1,:2]-target.unsqueeze(1)[...,-1,:2],p=2,dim=-1)
+            #fde = torch.norm(pred[..., 0, :2] - target.unsqueeze(1)[..., 0, :2], p=2, dim=-1)
+
             if not normalized_probability:
                 prob = torch.softmax(prob.double(), dim=-1)
             brier_score = (1 - prob) ** 2
