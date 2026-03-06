@@ -82,7 +82,7 @@ python preprocess_av2.py --data_root=/path/to/data_root -p
 - **Step 5:** After validation, save the checkpoint with the best result to `TBM.ckpt`.
 
 ### Stage 3: Freeze TBM and Fine-tune OAF
-- **Step 1:** In `conf/config.yaml`, set `isFinetune` to `false` (line 12), `pretrained_weights` to `OAF.ckpt` (line 16), and `backtrack_weights` to `TBM.ckpt` (line 17).
+- **Step 1:** In `conf/config.yaml`, set `isFinetune` to `true` (line 12), `pretrained_weights` to `OAF.ckpt` (line 16), and `backtrack_weights` to `TBM.ckpt` (line 17).
 - **Step 2:** Reproduce Steps 2, 3, and 4 in Stage 1.
 - **Step 3:** Finetune OAF with `python train.py`, and validation OAF with `python eval.py`.
 - **Step 4:** After validation, save the checkpoint with the best result to `TaPD.ckpt`.
