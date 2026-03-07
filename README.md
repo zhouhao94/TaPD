@@ -88,6 +88,9 @@ python preprocess_av2.py --data_root=/path/to/data_root -p
 - **Step 4:** After validation, save the checkpoint with the best result to `TaPD.ckpt`.
 - **Step 5:** Test finetuned model for leaderboard submission with `python eval.py gpus=1 test=true`.
 
+### Note: Validation under Variable-Length Observation
+In `conf/datamodule/av2.yaml`, set `val_squence_start` to `0`, `10`, `20`, `30`, or `40` (line 18) to validate with observation length `50`, `40`, `30`, `20`, or `10`, respectively.
+
 ## ⭐ Results and checkpoints
 | Models | 10Ts | 20Ts | 20Ts | 40Ts | 50Ts |
 | :- | :-: | :-: | :-: | :-: | :-: |
