@@ -1,6 +1,10 @@
 # TaPD: Temporal-adaptive Progressive Distillation for Observation-Adaptive Trajectory Forecasting in Autonomous Driving
 ### [[Paper]](https://arxiv.org/abs/2603.06231)
 
+> [**TaPD: Temporal-adaptive Progressive Distillation for Observation-Adaptive Trajectory Forecasting in Autonomous Driving**](https://arxiv.org/abs/2507.17342)            
+> [**Mingyu Fan, Yi Liu, Hao Zhou, Deheng Qian, Mohammad Haziq Khan, Matthias Raetsch**  
+> **arXiv preprint arXiv:2603.06231**
+
 ## 🛠️ Get started
 
 ### Set up a new virtual environment
