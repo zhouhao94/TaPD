@@ -1,5 +1,5 @@
 # TaPD: Temporal-adaptive Progressive Distillation for Observation-Adaptive Trajectory Forecasting in Autonomous Driving
-### [[Paper]]()
+### [[Paper]](https://arxiv.org/abs/2603.06231)
 
 ## 🛠️ Get started
 
